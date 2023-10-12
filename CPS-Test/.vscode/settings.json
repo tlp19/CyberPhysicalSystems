@@ -1,0 +1,5 @@
+{
+    "cmake.configureOnOpen": true,
+    "cmake.sourceDirectory": "C:/Users/tangu/source/IDE/CyberPhysicalSystems/CPS-Test/.pio/libdeps/nano_every/Unity",
+    "C_Cpp.default.compilerPath": "C:/Users/tangu/.platformio/packages/toolchain-atmelavr/bin/avr-gcc.exe"
+}

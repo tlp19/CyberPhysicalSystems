@@ -1,0 +1,11 @@
+{
+  "additionalFiles": "..\\..\\..,..\\..\\..",
+  "builtInToolsFolders": "",
+  "compiler.optimization_flags": "",
+  "customBuildProperties": "",
+  "fqbn": "arduino:megaavr:nona4809:mode=on",
+  "hardwareFolders": "C:\\Users\\tangu\\AppData\\Local\\Arduino15\\packages",
+  "otherLibrariesFolders": "C:\\Users\\tangu\\OneDrive - Imperial College London\\HP Envy 13\\Documents\\Arduino\\libraries",
+  "runtime.ide.version": "10607",
+  "sketchLocation": "C:\\Users\\tangu\\source\\IDE\\CyberPhysicalSystems\\IDE-prototype"
+}

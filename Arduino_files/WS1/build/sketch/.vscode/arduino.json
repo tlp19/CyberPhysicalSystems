@@ -1,0 +1,8 @@
+#line 1 "C:\\Users\\tangu\\source\\IDE\\CyberPhysicalSystems\\WS1\\.vscode\\arduino.json"
+{
+    "sketch": "WS1.ino",
+    "output": "build",
+    "configuration": "mode=on",
+    "board": "arduino:megaavr:nona4809",
+    "port": "COM5"
+}
