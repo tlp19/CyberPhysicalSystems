@@ -1,4 +1,0 @@
-C:/Users/tangu/source/IDE/CyberPhysicalSystems/CPS-Test/build/CMakeFiles/unity.dir
-C:/Users/tangu/source/IDE/CyberPhysicalSystems/CPS-Test/build/CMakeFiles/INSTALL.dir
-C:/Users/tangu/source/IDE/CyberPhysicalSystems/CPS-Test/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/tangu/source/IDE/CyberPhysicalSystems/CPS-Test/build/CMakeFiles/ZERO_CHECK.dir

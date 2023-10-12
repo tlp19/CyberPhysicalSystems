@@ -1,7 +1,5 @@
-Arduino_files/**
-CPS-Test/**
-**/.pio/**
-**/.vscode/**
+/Arduino_files/**
+/CPS-Test/**
 
 # Prerequisites
 *.d

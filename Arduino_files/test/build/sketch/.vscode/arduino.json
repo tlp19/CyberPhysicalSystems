@@ -1,7 +1,0 @@
-#line 1 "C:\\Users\\tangu\\source\\IDE\\CyberPhysicalSystems\\test\\.vscode\\arduino.json"
-{
-    "sketch": "test.ino",
-    "output": "build",
-    "configuration": "mode=on",
-    "board": "arduino:megaavr:nona4809"
-}
