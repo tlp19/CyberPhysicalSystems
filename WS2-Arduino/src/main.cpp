@@ -74,12 +74,12 @@ void loop() {
 
         } else if(readingSliderID){
             // If the character is not a letter, it should be a number or a decimal point '.'
-            // So if we are currently reading the slider ID, we will add the number/dot to the current received ID string/text
+            // So if we are currently reading the slider ID, we will add the number/dot to the end of the current received ID string/text
             receivedSliderID += received;
 
         } else if(readingSliderValue){
             // If the character is not a letter, it should be a number or a decimal point '.'
-            // So if we are currently reading the slider value, we will add the number/dot to the current received value string/text
+            // So if we are currently reading the slider value, we will add the number/dot to the end of the current received value string/text
             receivedSliderValue += received;
         }
     }
