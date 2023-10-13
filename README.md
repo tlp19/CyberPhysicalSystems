@@ -1,4 +1,4 @@
-# CyberPhysicalSystems
+# IDE1 - Cyber-Physical Systems
 IDE1 - Group project and worksheet exercises
 
 ## Worksheet 1
