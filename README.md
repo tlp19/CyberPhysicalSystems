@@ -1,5 +1,5 @@
-# CyberPhysicalSystems
-IDE1 - Group project and worksheet exercises
+# IDE1 - Cyber-Physical Systems
+Repository for the Group Project and worksheet exercises.
 
 ## Worksheet 1
 
