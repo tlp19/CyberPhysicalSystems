@@ -19,10 +19,10 @@ float[] spectrum = new float[bands];
 int constFreqNum = 10;
 float sampleRate = 44100.0;
 
-int lengthOfRecording = 1000;
+int confirmationWait = 500;
 
-int recording = false;
-int startOfRecording = 0;
+boolean recording = false;
+int lastRecording = 0;
 int woodRecords = 0;
 int metalRecords = 0;
 int plasticRecords = 0;
@@ -100,6 +100,38 @@ void draw() {
     // println("Freq 2: " + frequencies[1] + " Hz with amplitude " + freqAmps[1]);
     // println("Freq 3: " + frequencies[2] + " Hz with amplitude " + freqAmps[2]);
   }
+
+  // If the last OSC message from Wekinator was received more than a certain time ago (the confirmation wait)
+  if (recording && (millis() > (lastRecording + confirmationWait))) {
+    
+    // Find the total number of records
+    int allRecords = woodRecords + metalRecords + plasticRecords;
+
+    // Make sure there are enough records to make a decision
+    if (allRecords <= 4) {
+      return;
+    }
+
+    // Find the proportion of each material
+    float propWood = (float)woodRecords / (float)allRecords;
+    float propMetal = (float)metalRecords / (float)allRecords;
+    float propPlastic = (float)plasticRecords / (float)allRecords;
+
+    // Find the material with the highest proportion and send it to the Arduino
+    if ((propWood > propMetal) && (propWood > propPlastic)) {
+      updateArduino(materials[0]);
+    } else if ((propMetal > propWood) && (propMetal > propPlastic)) {
+      updateArduino(materials[1]);
+    } else if ((propPlastic > propWood) && (propPlastic > propMetal)) {
+      updateArduino(materials[2]);
+    }
+
+    // Reset the records
+    recording = false;
+    woodRecords = 0;
+    metalRecords = 0;
+    plasticRecords = 0;
+  }
 }
 
 
@@ -109,43 +141,43 @@ void oscEvent(OscMessage oscMessage) {
 
     // Check if the typetag is the right one
     if (oscMessage.checkTypetag("f")) {
-      // Parse the OscMessage and extract the values from the osc message arguments
-      float firstValue = oscMessage.get(0).floatValue();
-      println("---> received OSC message from '/wek/outputs'");
-      println(" value: " + firstValue);
-      // Send the value to the Arduino
-      println("Material: " + materials[(int)firstValue-1]);
-      updateArduino(materials[(int)firstValue-1]+'_');
 
-    } else if (oscMessage.checkTypetag("fff")) {
       // Parse the OscMessage and extract the values from the osc message arguments
-      float firstValue = oscMessage.get(0).floatValue();
-      float secondValue = oscMessage.get(1).floatValue();
-      float thirdValue = oscMessage.get(2).floatValue();
+      float value = oscMessage.get(0).floatValue();
       println("---> received OSC message from '/wek/outputs'");
-      println(" values: " + firstValue);
-      println("         " + secondValue);
-      println("         " + thirdValue);
+      println(" value: " + value);
 
-      // TODO: Send the values to the Arduino
+      // Record the predicted material
+      recording = true;
+      switch ((int)value) {
+        case 1:
+          woodRecords++;
+          break;
+        case 2:
+          metalRecords++;
+          break;
+        case 3:
+          plasticRecords++;
+          break;
+      }
+
+      // Remember when we received this message
+      lastRecording = millis();
+
+      println("Wood: " + woodRecords + " Metal: " + metalRecords + " Plastic: " + plasticRecords);
     }
 
   } else if (oscMessage.checkAddrPattern("/material")) {
-
-    if (oscMessage.checkTypetag("ffff")) {
-      float firstValue = oscMessage.get(0).floatValue();
-      float secondValue = oscMessage.get(1).floatValue();
-      float thirdValue = oscMessage.get(2).floatValue();
-      float fourthValue = oscMessage.get(3).floatValue();
-      println("---> received OSC message from '/material'");
-      println(" values: " + firstValue);
-      println("         " + secondValue);
-      println("         " + thirdValue);
-      println("         " + fourthValue);
-
-    } else {
-      println(oscMessage.typetag());
-    }
+    // if (oscMessage.checkTypetag("ffff")) {
+    //   float firstValue = oscMessage.get(0).floatValue();
+    //   float secondValue = oscMessage.get(1).floatValue();
+    //   float thirdValue = oscMessage.get(2).floatValue();
+    //   float fourthValue = oscMessage.get(3).floatValue();
+    //   println("---> received OSC message from '/material'");
+    //   println(" values: " + firstValue);
+    //   println("         " + secondValue);
+    //   println("         " + thirdValue);
+    //   println("         " + fourthValue);
 
   } else {
     println("---> received unknown OSC message with address " + oscMessage.addrPattern());
@@ -180,13 +212,13 @@ void sendOsc(float amplitude, float[] frequencies, float[] freqAmps) {
 // Send a new message to the Arduino
 void updateArduino(String message) {
   // Check that the message is different from the last one sent
-  println("Last message: ", lastArduinoMessage, " New message: ", message, " ");
-  if(message.equals(lastArduinoMessage) == false) {
+  // println("Last message: ", lastArduinoMessage, " New message: ", message, " ");
+  // if(message.equals(lastArduinoMessage) == false) {
     // Print for debugging
     println("Sent to the arduino: ", message);
     // Send the message to the Arduino
     port.write(message);
     // Update the message
     lastArduinoMessage = message;
-  }
+  // }
 }
