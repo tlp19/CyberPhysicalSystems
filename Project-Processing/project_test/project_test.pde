@@ -106,7 +106,7 @@ void draw() {
     int allRecords = woodRecords + metalRecords + plasticRecords;
 
     // Make sure there are enough records to make a decision
-    if (allRecords <= 4) {
+    if (allRecords <= 6) {
       return;
     }
 
