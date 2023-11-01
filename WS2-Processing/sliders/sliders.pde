@@ -14,11 +14,10 @@ void setup() {
   size(640, 360);
   
   // Setup the communication with the Arduino
+  println("Ports available: ");
+  println(Serial.list());
   String portName = Serial.list()[2];
   port = new Serial(this, portName, 9600);
-  print("Ports available: ");
-  //print(Serial.list());
-  print("\n");
   
   int numOfHandles = 4;
   handles = new Handle[numOfHandles];

@@ -4,7 +4,6 @@ import netP5.*;
 import processing.serial.*;
 
 Serial port;
-String lastArduinoMessage;
 String[] materials = {"wood", "metal", "plastic"};
 
 OscP5 oscP5;
@@ -35,7 +34,6 @@ void setup() {
   // Setup the communication with the Arduino
   String portName = Serial.list()[2];
   port = new Serial(this, portName, 9600);
-  lastArduinoMessage = "";
 
   // Start oscP5, listening for incoming messages at port 12000
   oscP5 = new OscP5(this, 12000);
@@ -211,14 +209,10 @@ void sendOsc(float amplitude, float[] frequencies, float[] freqAmps) {
 
 // Send a new message to the Arduino
 void updateArduino(String message) {
-  // Check that the message is different from the last one sent
-  // println("Last message: ", lastArduinoMessage, " New message: ", message, " ");
-  // if(message.equals(lastArduinoMessage) == false) {
-    // Print for debugging
-    println("Sent to the arduino: ", message);
+    // Add a delimiter to the message
+    message = message + "_";
+
     // Send the message to the Arduino
     port.write(message);
-    // Update the message
-    lastArduinoMessage = message;
-  // }
+    println("Sent to the arduino: ", message);
 }
